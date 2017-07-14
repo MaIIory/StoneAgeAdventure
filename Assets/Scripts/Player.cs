@@ -44,8 +44,7 @@ public class Player : MonoBehaviour {
             //body.GetComponent<SpriteRenderer>().color = Color.Lerp()
         }
 
-        var colliderList = GetComponents< BoxCollider2D>();
-            
+        var colliderList = GetComponents< BoxCollider2D>();            
 	}
 
 	public void Update()
@@ -54,6 +53,9 @@ public class Player : MonoBehaviour {
 			HandleInput ();
 		float movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
 		_controller.SetHorizontalForce (Mathf.Lerp (_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
+
+        _animator.SetBool("IsGrounded", _controller.State.IsGrounded);
+        _animator.SetFloat("Speed", Mathf.Abs(_controller.Velocity.x) / MaxSpeed);
 
         /*
         bodyRenderer.color = Color.Lerp(BasePlayerColor, BoosterPlayerColor, _colorCounter / 255f);
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour {
             StepColorFactor = -StepColorFactor;
         }
         */
-	}
+    }
 
 	public void Kill() {
 		_controller.HandleCollision = false;
@@ -88,7 +90,7 @@ public class Player : MonoBehaviour {
 
 		_controller.HandleCollision = true;
 		GetComponent<Collider2D> ().enabled = true;
-        _cudgel.gameObject.SetActive(true);
+        _cudgel.gameObject.SetActive(false);
         IsDead = false;
         Health = MaxHealth;
 
@@ -160,7 +162,6 @@ public class Player : MonoBehaviour {
 
         if (CnInputManager.GetButtonDown("lucki"))
         {
-            Debug.Log("Fire!!!!");
             Smash();
         }
 
@@ -173,7 +174,13 @@ public class Player : MonoBehaviour {
         _animator.SetTrigger("Hit");
     }
 
-	private void Flip()
+    public void CudgelAnimationHasFinished()
+    {
+        Debug.Log("Cudgel animation has finished");
+        _cudgel.gameObject.SetActive(false);
+    }
+
+    private void Flip()
 	{
 		transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		_isFacingRight = transform.localScale.x > 0;

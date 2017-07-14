@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0ae65171e7c5e69429049a2a470a2753
-timeCreated: 1460319147
+timeCreated: 1499720484
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,7 +10,7 @@ TextureImporter:
     21300006: Tile_03
     21300008: Tile_04
     21300010: Tile_05
-    21300012: Bad_dino_runner
+    21300012: Bad_dino_runner_body
     21300014: Bad_dino_shooter
     21300016: Health_pack
     21300018: Tree_00
@@ -20,6 +20,8 @@ TextureImporter:
     21300026: Cloud_00
     21300028: jump_platform
     21300030: Main_atlas_1
+    21300032: bad_dino_runner_leg
+    21300034: bad_dino_head
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -33,7 +35,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -53,19 +55,23 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Tile_00
+    - serializedVersion: 2
+      name: Tile_00
       rect:
         serializedVersion: 2
         x: 59
@@ -75,7 +81,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tile_01
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tile_01
       rect:
         serializedVersion: 2
         x: 359
@@ -85,7 +94,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tile_02
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tile_02
       rect:
         serializedVersion: 2
         x: 672
@@ -95,7 +107,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tile_03
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tile_03
       rect:
         serializedVersion: 2
         x: 990
@@ -105,7 +120,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tile_04
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tile_04
       rect:
         serializedVersion: 2
         x: 1298
@@ -115,7 +133,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tile_05
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tile_05
       rect:
         serializedVersion: 2
         x: 1600
@@ -125,17 +146,23 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Bad_dino_runner
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Bad_dino_runner_body
       rect:
         serializedVersion: 2
-        x: 722
-        y: 509
-        width: 300
-        height: 163
+        x: 810
+        y: 512
+        width: 246
+        height: 95
       alignment: 7
-      pivot: {x: .5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Bad_dino_shooter
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 1}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Bad_dino_shooter
       rect:
         serializedVersion: 2
         x: 1419
@@ -143,9 +170,12 @@ TextureImporter:
         width: 354
         height: 248
       alignment: 7
-      pivot: {x: .5, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Health_pack
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Health_pack
       rect:
         serializedVersion: 2
         x: 1848
@@ -153,9 +183,12 @@ TextureImporter:
         width: 100
         height: 100
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Tree_00
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Tree_00
       rect:
         serializedVersion: 2
         x: 17
@@ -163,9 +196,12 @@ TextureImporter:
         width: 551
         height: 520
       alignment: 7
-      pivot: {x: .5, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Fireball
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Fireball
       rect:
         serializedVersion: 2
         x: 1165
@@ -173,9 +209,12 @@ TextureImporter:
         width: 59
         height: 59
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Platform_00
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Platform_00
       rect:
         serializedVersion: 2
         x: 722
@@ -185,7 +224,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Bone
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Bone
       rect:
         serializedVersion: 2
         x: 720
@@ -193,9 +235,12 @@ TextureImporter:
         width: 152
         height: 124
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Cloud_00
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Cloud_00
       rect:
         serializedVersion: 2
         x: 1190
@@ -203,19 +248,25 @@ TextureImporter:
         width: 481
         height: 253
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: jump_platform
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: jump_platform
       rect:
         serializedVersion: 2
-        x: 1093
-        y: 401
+        x: 1069
+        y: 412
         width: 249
         height: 48
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Main_atlas_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Main_atlas_1
       rect:
         serializedVersion: 2
         x: 1099
@@ -223,8 +274,37 @@ TextureImporter:
         width: 63
         height: 6
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bad_dino_runner_leg
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 628
+        width: 63
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bad_dino_head
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 534
+        width: 122
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

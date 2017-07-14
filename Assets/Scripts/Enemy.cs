@@ -12,11 +12,13 @@ public class Enemy : MonoBehaviour, IPlayerRespawnListener
     private float _lastPosition;
     private bool _isDead = false;
     private Vector2 _velocity;
+    public bool _isDynamicEnemy = false;
 
     // Use this for initialization
     void Start () {
         _startPosition = transform.position;
         _lastPosition = transform.position.x;
+        _isDynamicEnemy = GetComponent<FollowPath>();
 	}
 	
 	// Update is called once per frame
@@ -62,7 +64,11 @@ public class Enemy : MonoBehaviour, IPlayerRespawnListener
             
             GameManager.Instance.AddPoints(PointsForKill);
             //Instantiate(Effect, transform.position, transform.rotation);
-            GetComponent<FollowPath>().enabled = false;
+
+            if(_isDynamicEnemy)
+                GetComponent<FollowPath>().enabled = false;
+
+
             GetComponent<Collider2D>().enabled = false;
             _isDead = true;
             //transform.localScale = new Vector2(transform.localScale.x, -transform.localScale.y);
@@ -78,7 +84,8 @@ public class Enemy : MonoBehaviour, IPlayerRespawnListener
     public void OnPlayerRespawnAtThisCheckpoint(Checkpoint checkpoint, Player player)
     {
         _velocity.y = 0;
-        GetComponent<FollowPath>().enabled = true;
+        if (_isDynamicEnemy)
+            GetComponent<FollowPath>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
         gameObject.SetActive(true);
         _isDead = false;

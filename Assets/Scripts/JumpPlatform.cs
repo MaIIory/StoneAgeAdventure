@@ -4,10 +4,18 @@ using System.Collections;
 public class JumpPlatform : MonoBehaviour {
 
 	public float jumpMagnitude = 1;
+    public AudioClip JumpSound;
+    private AudioSource _audioSource;
 
-	public void ControllerEnter2D(CharacterController2D characterController2D) {
+    void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
-		characterController2D.SetVerticalForce (jumpMagnitude);
+    public void ControllerEnter2D(CharacterController2D characterController2D) {
+
+        _audioSource.PlayOneShot(JumpSound, 0.5f);
+        characterController2D.SetVerticalForce (jumpMagnitude);
 
 	}
 }

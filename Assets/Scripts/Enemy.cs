@@ -14,6 +14,14 @@ public class Enemy : MonoBehaviour, IPlayerRespawnListener
     private Vector2 _velocity;
     public bool _isDynamicEnemy = false;
 
+    public AudioClip PlayerHitSound;
+    private AudioSource _audioSource;
+
+    public void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     // Use this for initialization
     void Start () {
         _startPosition = transform.position;
@@ -71,6 +79,8 @@ public class Enemy : MonoBehaviour, IPlayerRespawnListener
 
             GetComponent<Collider2D>().enabled = false;
             _isDead = true;
+
+            _audioSource.PlayOneShot(PlayerHitSound, 0.5f);
             //transform.localScale = new Vector2(transform.localScale.x, -transform.localScale.y);
 
             yield return new WaitForSeconds(3f);

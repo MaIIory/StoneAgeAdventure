@@ -18,7 +18,7 @@ public class ScoreHud : MonoBehaviour {
 
         if(obj == null)
         {
-            Debug.Log("null");
+            Debug.Log("No 'Text' Component");
         }
         else
         {

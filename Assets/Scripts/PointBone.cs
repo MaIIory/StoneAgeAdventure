@@ -8,8 +8,15 @@ public class PointBone : MonoBehaviour, IPlayerRespawnListener {
     public Animator Animator;
     private bool _isCollected = false;
 
+    public AudioClip CollectSound;
+    private AudioSource _audioSource;
 
-	public void OnTriggerEnter2D(Collider2D other)
+    public void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+        public void OnTriggerEnter2D(Collider2D other)
 	{
         if (_isCollected)
             return;
@@ -22,7 +29,8 @@ public class PointBone : MonoBehaviour, IPlayerRespawnListener {
 			//Instantiate(Effect, transform.position, transform.rotation);
             _isCollected = true;
             Animator.SetTrigger("Bone Collected");
-		}
+            _audioSource.PlayOneShot(CollectSound, 0.5f);
+        }
 	}
 
 	public void OnPlayerRespawnAtThisCheckpoint(Checkpoint checkpoint, Player player)

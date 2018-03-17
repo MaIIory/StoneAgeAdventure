@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	private bool _isFacingRight;
-	private CharacterController2D _controller;
-	private float _normalizedHorizontalSpeed; //indicates if playes moving left or right
+    private bool _isFacingRight;
+    private CharacterController2D _controller;
+    private float _normalizedHorizontalSpeed; //indicates if playes moving left or right
     private Animator _animator;
 
-	public float MaxSpeed = 8;
-	public float SpeedAccelerationOnGround = 10f;
-	public float SpeedAccelerationInAir = 5f;
-	public bool IsDead { get; private set; }
+    public float MaxSpeed = 8;
+    public float SpeedAccelerationOnGround = 10f;
+    public float SpeedAccelerationInAir = 5f;
+    public bool IsDead { get; private set; }
 
     public int MaxHealth = 100;
     public int Health { get; private set; }
@@ -26,13 +26,19 @@ public class Player : MonoBehaviour {
     private SpriteRenderer bodyRenderer;
     public Cudgel _cudgel;
 
-	public void Awake()
-	{
-		_controller = GetComponent<CharacterController2D> ();
-        _animator = GetComponent<Animator>();
+    //public AudioClip PlayerJumpSound;
+    public AudioClip PlayerDeadSound;
 
-		_isFacingRight = transform.localScale.x > 0;
-		IsDead = false;
+    private AudioSource _audioSource;
+
+    public void Awake()
+    {
+        _controller = GetComponent<CharacterController2D>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+
+        _isFacingRight = transform.localScale.x > 0;
+        IsDead = false;
         Health = MaxHealth;
 
         var body = transform.Find("Body");
@@ -44,15 +50,15 @@ public class Player : MonoBehaviour {
             //body.GetComponent<SpriteRenderer>().color = Color.Lerp()
         }
 
-        var colliderList = GetComponents< BoxCollider2D>();            
-	}
+        var colliderList = GetComponents<BoxCollider2D>();
+    }
 
-	public void Update()
-	{
-		if(!IsDead)
-			HandleInput ();
-		float movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
-		_controller.SetHorizontalForce (Mathf.Lerp (_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
+    public void Update()
+    {
+        if (!IsDead)
+            HandleInput();
+        float movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
+        _controller.SetHorizontalForce(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
 
         _animator.SetBool("IsGrounded", _controller.State.IsGrounded);
         _animator.SetFloat("Speed", Mathf.Abs(_controller.Velocity.x) / MaxSpeed);
@@ -73,37 +79,52 @@ public class Player : MonoBehaviour {
         */
     }
 
-	public void Kill() {
-		_controller.HandleCollision = false;
-		GetComponent<Collider2D> ().enabled = false;
+    public void Kill() {
+
+        _audioSource.PlayOneShot(PlayerDeadSound, 1.3f);
+        //AudioSource.PlayClipAtPoint(PlayerDeadSound, transform.position);
+        _controller.HandleCollision = false;
+        GetComponent<Collider2D>().enabled = false;
         _cudgel.gameObject.SetActive(false);
-		IsDead = true;
+        IsDead = true;
         Health = 0;
-		_normalizedHorizontalSpeed = 0;
-		_controller.SetForce (new Vector2 (0, 10));
-	}
+        _normalizedHorizontalSpeed = 0;
+        _controller.SetForce(new Vector2(0, 10));
+    }
 
-	public void RespawnAt(Transform spawnPoint){
+    public void Win()
+    {
 
-		if (!_isFacingRight)
-			Flip ();
+        //_controller.HandleCollision = false;
+        GetComponent<Collider2D>().enabled = false;
+        _cudgel.gameObject.SetActive(false);
+        IsDead = true;
+        Health = 0;
+        _normalizedHorizontalSpeed = 0;
+        _controller.SetForce(new Vector2(0, 20));
+    }
 
-		_controller.HandleCollision = true;
-		GetComponent<Collider2D> ().enabled = true;
+    public void RespawnAt(Transform spawnPoint) {
+
+        if (!_isFacingRight)
+            Flip();
+
+        _controller.HandleCollision = true;
+        GetComponent<Collider2D>().enabled = true;
         _cudgel.gameObject.SetActive(false);
         IsDead = false;
         Health = MaxHealth;
 
-		transform.position = spawnPoint.position;
+        transform.position = spawnPoint.position;
 
-	}
+    }
 
     public void TakeDamage(int damage)
     {
         Instantiate(OuchEffect, transform.position, transform.rotation);
         Health -= damage;
 
-        if(Health <= 0)
+        if (Health <= 0)
         {
             LevelManager.Instance.KillPlayer();
             Health = 0;
@@ -111,8 +132,8 @@ public class Player : MonoBehaviour {
 
     }
 
-	private void HandleInput()
-	{
+    private void HandleInput()
+    {
         /*
 		if (Input.GetKey (KeyCode.D)) {
 			_normalizedHorizontalSpeed = 1;
@@ -127,7 +148,7 @@ public class Player : MonoBehaviour {
 		}
         */
 
-        
+
         if (CnInputManager.GetAxis("Horizontal") > 0)
         {
             _normalizedHorizontalSpeed = CnInputManager.GetAxis("Horizontal");
@@ -150,9 +171,12 @@ public class Player : MonoBehaviour {
         //	_controller.Jump ();
         //}
 
-        
+
         if (_controller.CanJump && CnInputManager.GetButtonDown("Jump")){
             _controller.Jump();
+            //AudioSource.PlayClipAtPoint(PlayerJumpSound, transform.position, 0.9f);
+            //_audioSource.PlayOneShot(PlayerJumpSound, 0.9f);
+            
         }
 
         //if (_controller.CanJump && CnInputManager.GetAxis("Vertical") > 0.7f)
@@ -160,7 +184,7 @@ public class Player : MonoBehaviour {
         //   _controller.Jump();
         //}
 
-        if (CnInputManager.GetButtonDown("lucki"))
+        if (CnInputManager.GetButtonDown("lucki") || Input.GetKeyDown(KeyCode.RightControl))
         {
             Smash();
         }
@@ -171,6 +195,7 @@ public class Player : MonoBehaviour {
     private void Smash()
     {
         _cudgel.Smash();
+        
         _animator.SetTrigger("Hit");
     }
 
